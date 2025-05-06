@@ -1,3 +1,4 @@
+// Simulador  Carrito v2.0
 let productos = [
   {
     id: 1,
@@ -5,6 +6,7 @@ let productos = [
     Talle: "L",
     Stock: 10,
     Precio: 35,
+    imagen: "img/SHEIN.jpeg",
   },
   {
     id: 2,
@@ -12,6 +14,7 @@ let productos = [
     Talle: "L",
     Stock: 10,
     Precio: 60,
+    imagen: "img/PULL&BEAR.jpeg",
   },
   {
     id: 3,
@@ -19,6 +22,7 @@ let productos = [
     Talle: "L",
     Stock: 10,
     Precio: 53,
+    imagen: "img/Homme.jpeg",
   },
   {
     id: 4,
@@ -26,6 +30,7 @@ let productos = [
     Talle: "L",
     Stock: 10,
     Precio: 33,
+    imagen: "img/remeraboxy.jpg",
   },
   {
     id: 5,
@@ -33,11 +38,237 @@ let productos = [
     Talle: "L",
     Stock: 10,
     Precio: 43,
+    imagen: "img/bermuda.jpeg",
+  },
+  {
+    id: 6,
+    Nombre: "Gorra Chicago Bulls",
+    Talle: "L",
+    Stock: 10,
+    Precio: 180,
+    imagen: "img/Gorra.jpeg",
   },
 ];
 
 let carritoDeCompra = [];
 
+const targetsProductos = (productos) => {
+  const contenedor = document.getElementById("contenedor-productos");
+
+  productos.forEach((producto) => {
+    let col = document.createElement("div");
+    col.className = "col-12 col-md-6 col-lg-4";
+
+    col.innerHTML = `
+      <div class="card h-100 shadow-sm">
+        <img src="${producto.imagen}" class="card-img-top" alt="${producto.Nombre}">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">${producto.Nombre}</h5>
+          <p class="card-text">Talle: ${producto.Talle}</p>
+          <p class="card-text">Precio: $${producto.Precio}</p>
+          <p class="card-text">Disponible: <span id="stock-${producto.id}">${producto.Stock}</span></p>
+          <button class="btn btn-primary mt-auto" id="agregar-${producto.id}">Agregar al carrito</button>
+        </div>
+      </div>
+    `;
+
+    contenedor.appendChild(col);
+    agregarProductos(producto); // Asocia evento al botón
+  });
+};
+
+// Asocia el botón "Agregar al carrito"
+function agregarProductos(producto) {
+  const botonAgregar = document.getElementById(`agregar-${producto.id}`);
+  botonAgregar.addEventListener("click", () => {
+    if (producto.Stock <= 0) return;
+
+    producto.Stock--;
+    carritoDeCompra.push(producto.id); // Solo guardamos ID
+    guardarCarrito(); // Guarda el carrito en localStorage
+    targetsCarrito(carritoDeCompra);
+    actualizarBotonesTienda(); // Refresca los botones
+  });
+}
+
+// Actualiza el carrito visualmente
+const targetsCarrito = (carrito) => {
+  const contenedor = document.getElementById("contenedor-carrito");
+  contenedor.innerHTML = "";
+
+  const productosAgrupados = {};
+
+  carrito.forEach((id) => {
+    if (!productosAgrupados[id]) {
+      const productoOriginal = productos.find((p) => p.id === id);
+      productosAgrupados[id] = { ...productoOriginal, cantidad: 0 };
+    }
+    productosAgrupados[id].cantidad++;
+  });
+
+  let totalGeneral = 0;
+
+  Object.values(productosAgrupados).forEach((producto) => {
+    const subtotal = producto.Precio * producto.cantidad;
+    totalGeneral += subtotal;
+
+    const col = document.createElement("div");
+    col.className = "col-12";
+
+    col.innerHTML = `
+      <div class="card d-flex flex-row justify-content-between align-items-center p-3">
+        <img src="https://via.placeholder.com/100" class="me-3" alt="${producto.Nombre}">
+        <div class="flex-grow-1">
+          <h5>${producto.Nombre}</h5>
+          <p>Talle: ${producto.Talle}</p>
+          <p>Precio unitario: $${producto.Precio}</p>
+          <div class="d-flex align-items-center">
+            <button class="btn btn-outline-secondary btn-sm me-2" id="restar-${producto.id}">-</button>
+            <span id="cantidad-${producto.id}">${producto.cantidad}</span>
+            <button class="btn btn-outline-secondary btn-sm ms-2" id="sumar-${producto.id}">+</button>
+          </div>
+        </div>
+        <div class="text-end">
+          <strong>Subtotal: $<span id="subtotal-${producto.id}">${subtotal}</span></strong>
+        </div>
+      </div>
+    `;
+
+    contenedor.appendChild(col);
+    EventoSumRestProduct(producto.id);
+  });
+
+  document.getElementById("total-general").textContent = totalGeneral;
+  actualizarBotonesTienda();
+  finalizarCompra();
+};
+
+// Sumar y restar productos del carrito
+const EventoSumRestProduct = (id) => {
+  const productoOriginal = productos.find((p) => p.id === id);
+
+  document.getElementById(`sumar-${id}`).addEventListener("click", () => {
+    if (productoOriginal.Stock <= 0) return;
+    productoOriginal.Stock--;
+    carritoDeCompra.push(id);
+    targetsCarrito(carritoDeCompra);
+  });
+
+  document.getElementById(`restar-${id}`).addEventListener("click", () => {
+    const index = carritoDeCompra.findIndex((prodId) => prodId === id);
+    if (index !== -1) {
+      productoOriginal.Stock++;
+      carritoDeCompra.splice(index, 1);
+      guardarCarrito(); // Guarda el carrito en localStorage
+      targetsCarrito(carritoDeCompra);
+    }
+  });
+};
+
+// Sincroniza los botones de la tienda con el stock actual
+function actualizarBotonesTienda() {
+  productos.forEach((producto) => {
+    const boton = document.getElementById(`agregar-${producto.id}`);
+    const stockSpan = document.getElementById(`stock-${producto.id}`);
+    if (boton && stockSpan) {
+      stockSpan.textContent = producto.Stock;
+      if (producto.Stock <= 0) {
+        boton.disabled = true;
+        boton.textContent = "Sin stock";
+      } else {
+        boton.disabled = false;
+        boton.textContent = "Agregar al carrito";
+      }
+    }
+  });
+}
+
+// Simula finalización de compra
+const finalizarCompra = () => {
+  const btnPagar = document.getElementById("btn-pagar");
+  if (!btnPagar) return;
+
+  // Elimina cualquier listener anterior para evitar múltiples mensajes
+  const nuevoBtnPagar = btnPagar.cloneNode(true);
+  btnPagar.parentNode.replaceChild(nuevoBtnPagar, btnPagar);
+
+  nuevoBtnPagar.addEventListener(
+    "click",
+    () => {
+      // Mostrar mensaje de compra
+      const mensaje = document.createElement("div");
+      mensaje.className = "alert alert-success mt-3";
+      mensaje.textContent = "¡Gracias por tu compra!";
+      document.body.appendChild(mensaje);
+
+      // Desvanecer y eliminar después de 2 segundos
+      setTimeout(() => {
+        mensaje.style.opacity = "0";
+        setTimeout(() => mensaje.remove(), 500); // Espera a que termine la transición
+      }, 500);
+
+      // Restaurar stock
+      carritoDeCompra.forEach((id) => {
+        const producto = productos.find((p) => p.id === id);
+        if (producto) producto.Stock++;
+      });
+
+      // Vaciar carrito y actualizar todo
+      carritoDeCompra = [];
+      guardarCarrito(); // Guarda el carrito vacío en localStorage
+      targetsCarrito(carritoDeCompra);
+      actualizarBotonesTienda();
+    },
+    { once: true }
+  );
+};
+
+const guardarCarrito = () => {
+  const productosAgrupados = {};
+
+  carritoDeCompra.forEach((id) => {
+    const producto = productos.find((p) => p.id === id);
+    if (!producto) return;
+
+    if (!productosAgrupados[producto.id]) {
+      productosAgrupados[producto.id] = {
+        id: producto.id,
+        cantidad: 0,
+      };
+    }
+    productosAgrupados[producto.id].cantidad++;
+  });
+
+  const carritoParaGuardar = Object.values(productosAgrupados);
+  localStorage.setItem("carrito", JSON.stringify(carritoParaGuardar));
+};
+
+const cargarCarrito = () => {
+  const data = localStorage.getItem("carrito");
+  if (data) {
+    const productosGuardados = JSON.parse(data);
+    productosGuardados.forEach((item) => {
+      const original = productos.find((p) => p.id === item.id);
+      if (original) {
+        for (let i = 0; i < item.cantidad; i++) {
+          if (original.Stock > 0) {
+            original.Stock--;
+            carritoDeCompra.push(original.id);
+          }
+        }
+      }
+    });
+    targetsCarrito(carritoDeCompra);
+    actualizarBotonesTienda();
+  }
+};
+
+window.onload = () => {
+  targetsProductos(productos);
+  cargarCarrito(); // 👈 CARGAMOS EL CARRITO DESDE LOCALSTORAGE
+};
+
+/* Simulador v1.0
 const mostrarMenu = (arr) => {
   let mensaje = `!Bienvenido a la tienda! \n \n`;
 
@@ -172,5 +403,4 @@ const verEcomerce = () => {
   }
 };
 
-// Iniciar la tienda
-verEcomerce();
+Iniciar la tienda verEcomerce();*/
