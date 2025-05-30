@@ -93,7 +93,6 @@ const EventoSumRestProduct = (id) => {
 
   document.getElementById(`sumar-${id}`).addEventListener("click", () => {
     if (productoOriginal.Stock <= 0) {
-      alert("No hay más stock disponible");
       return;
     }
 
