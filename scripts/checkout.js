@@ -1,4 +1,4 @@
-// Tarjetas de prueba de Mercado Pago
+//Tarjetas de prueba de Mercado Pago
 //Trajetas de Credito para pruebas:
 // Mastercard: 5031 7557 3453 0604, MM/YY: 11/30, CVV: 123
 // American 3711 803032 57522, MM/YY: 11/30, CVV: 123
