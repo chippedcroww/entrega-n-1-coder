@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Checkout</title>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <h1 class="mb-4 text-center">Checkout</h1>
+
+      <!-- Mensaje de estado -->
+      <div id="mensaje" class="mb-3"></div>
+
+      <!-- Formulario Mercado Pago se montará aquí -->
+      <form
+        id="form-checkout"
+        class="bg-white p-4 rounded shadow-sm mx-auto"
+        style="max-width: 400px"
+      >
+        <div class="mb-3">
+          <label for="form-checkout__cardNumber" class="form-label"
+            >Número de la tarjeta</label
+          >
+          <input
+            id="form-checkout__cardNumber"
+            class="form-control"
+            placeholder="Número de la tarjeta"
+            required
+          />
+        </div>
+        <div class="mb-3 row">
+          <div class="col-6">
+            <label for="form-checkout__expirationDate" class="form-label"
+              >Fecha de expiración</label
+            >
+            <input
+              id="form-checkout__expirationDate"
+              class="form-control"
+              placeholder="MM/AA"
+              required
+            />
+          </div>
+          <div class="col-6">
+            <label for="form-checkout__securityCode" class="form-label"
+              >CVV</label
+            >
+            <input
+              id="form-checkout__securityCode"
+              class="form-control"
+              placeholder="CVV"
+              required
+            />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="form-checkout__cardholderName" class="form-label"
+            >Nombre del titular</label
+          >
+          <input
+            id="form-checkout__cardholderName"
+            class="form-control"
+            placeholder="Titular de la tarjeta"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="form-checkout__issuer" class="form-label"
+            >Banco emisor</label
+          >
+          <select
+            id="form-checkout__issuer"
+            class="form-select"
+            required
+          ></select>
+        </div>
+        <div class="mb-3">
+          <label for="form-checkout__installments" class="form-label"
+            >Cuotas</label
+          >
+          <select
+            id="form-checkout__installments"
+            class="form-select"
+            required
+          ></select>
+        </div>
+        <div class="mb-3">
+          <label for="form-checkout__identificationType" class="form-label"
+            >Tipo de documento</label
+          >
+          <select
+            id="form-checkout__identificationType"
+            class="form-select"
+            required
+          ></select>
+        </div>
+        <div class="mb-3">
+          <label for="form-checkout__identificationNumber" class="form-label"
+            >Número de documento</label
+          >
+          <input
+            id="form-checkout__identificationNumber"
+            class="form-control"
+            placeholder="Número de documento"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Pagar</button>
+      </form>
+    </div>
+
+    <!-- SDK Mercado Pago -->
+
+    <!-- Tu script checkout.js -->
+    <script type="module" src="scripts/checkout.js"></script>
+  </body>
+</html>
