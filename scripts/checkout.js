@@ -55,14 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
     callbacks: {
       onFormMounted: (error) => {
         if (error) return console.warn("Error al montar el formulario:", error);
-        console.log("Formulario Mercado Pago montado");
       },
       onSubmit: (event) => {
         event.preventDefault();
 
         // Obtiene los datos del formulario
         const cardData = cardForm.getCardFormData();
-        console.log("Datos de la tarjeta:", cardData);
 
         // Simula el pago exitoso
         mensaje.className = "alert alert-success text-center mt-3";
@@ -77,9 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
           window.location.href = "index.html";
         }, 3000);
       },
-      onFetching: (resource) => {
-        console.log("Cargando recurso:", resource);
-      },
+      onFetching: (resource) => {},
     },
   });
 });
