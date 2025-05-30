@@ -7,6 +7,16 @@ function targetsProductos(productos) {
     let col = document.createElement("div");
     col.className = "col-12 col-md-6 col-lg-4";
 
+    // Agrego clases para isotope según categoría
+    let claseCategoria = producto.category
+      .toLowerCase()
+      .replace(/'/g, "")
+      .replace(/\s+/g, "-")
+      .replace("mens", "men")
+      .replace("womens", "women");
+
+    col.className = `col-12 col-md-6 col-lg-4 producto ${claseCategoria}`;
+
     col.innerHTML = `
       <div class="card h-100 shadow-sm">
         <img src="${producto.image}" class="card-img-top" alt="${producto.title}">

@@ -15,6 +15,38 @@
     <section class="layout">
       <div class="navbar">
         <h2>Tienda</h2>
+        <div
+          class="filtros"
+          style="position: absolute; left: 20px; display: flex; gap: 8px"
+        >
+          <a href="#" class="filtro-btn btn btn-primary" data-filter="*"
+            >Todos</a
+          >
+          <a
+            href="#"
+            class="filtro-btn btn btn-outline-primary"
+            data-filter=".men-clothing"
+            >Ropa de Hombre</a
+          >
+          <a
+            href="#"
+            class="filtro-btn btn btn-outline-primary"
+            data-filter=".women-clothing"
+            >Ropa de Mujer</a
+          >
+          <a
+            href="#"
+            class="filtro-btn btn btn-outline-primary"
+            data-filter=".electronics"
+            >Electrónica</a
+          >
+          <a
+            href="#"
+            class="filtro-btn btn btn-outline-primary"
+            data-filter=".jewelery"
+            >Joyería</a
+          >
+        </div>
         <a href="./cart.html">Carrito</a>
       </div>
       <div class="main">
@@ -24,9 +56,8 @@
           </div>
         </div>
       </div>
-      <div class="footer">3</div>
     </section>
-
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script type="module" src="../scripts/main.js" defer></script>
     <!-- SweetAlert2 desde CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

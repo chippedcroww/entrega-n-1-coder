@@ -16,33 +16,43 @@
 
 .navbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between; /* espacio entre hijos */
   align-items: center;
-  position: relative;
   height: 70px;
   background-color: #333;
   padding: 0 20px;
+  position: relative; /* puede quedar */
+  color: white;
 }
+
+.filtros {
+  display: flex;
+  gap: 10px;
+}
+
+.filtros .btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+.navbar h2 {
+  margin: 0;
+  /* Remover position absolute para que no se superponga */
+  position: static;
+  transform: none;
+  flex-grow: 1;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
 .navbar a {
   color: white;
   text-decoration: none;
   padding: 14px 20px;
-  position: absolute;
-  right: 20px;
-}
-
-.navbar h2 {
-  color: rgb(255, 255, 255);
-  margin: 0;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.main {
-  grid-area: main;
-}
-
-.footer {
-  grid-area: footer;
+  /* Remover posición absoluta para que quede en flujo */
+  position: static;
 }
