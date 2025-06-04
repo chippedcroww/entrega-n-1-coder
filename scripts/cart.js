@@ -78,6 +78,8 @@ const targetsCarrito = (carrito, productos) => {
 
   document.getElementById("total-general").textContent =
     totalGeneral.toFixed(2);
+  localStorage.setItem("totalGeneral", totalGeneral.toFixed(2));
+
   actualizarBotonesTienda(productos);
   finalizarCompra();
 };

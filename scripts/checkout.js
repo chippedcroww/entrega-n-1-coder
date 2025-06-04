@@ -8,6 +8,8 @@
 // visa: 4002 7686 9439 5619, MM/YY: 11/30, CVV: 123
 // Funciona Con DNI 12345678
 
+const totalGeneral = localStorage.getItem("totalGeneral");
+
 document.addEventListener("DOMContentLoaded", () => {
   const mensaje = document.getElementById("mensaje");
 
@@ -18,7 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Crea y monta el formulario en el div #form-checkout
   const cardForm = mp.cardForm({
-    amount: "100.00", // Precio a pagar (puede ser dinámico)
+    amount: totalGeneral || "0.00",
+    // Precio a pagar (puede ser dinámico)
     autoMount: true,
     form: {
       id: "form-checkout",
@@ -69,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Limpia el carrito localStorage (simulando compra completada)
         localStorage.removeItem("carritoDeCompra");
+        localStorage.removeItem("totalGeneral");
 
         // Opcional: redirigir luego de 3 segundos
         setTimeout(() => {

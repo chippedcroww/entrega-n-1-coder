@@ -14,41 +14,99 @@
   <body>
     <section class="layout">
       <div class="navbar">
-        <h2>Tienda</h2>
-        <div
-          class="filtros"
-          style="position: absolute; left: 20px; display: flex; gap: 8px"
-        >
-          <a href="#" class="filtro-btn btn btn-primary" data-filter="*"
-            >Todos</a
-          >
-          <a
-            href="#"
-            class="filtro-btn btn btn-outline-primary"
-            data-filter=".men-clothing"
-            >Ropa de Hombre</a
-          >
-          <a
-            href="#"
-            class="filtro-btn btn btn-outline-primary"
-            data-filter=".women-clothing"
-            >Ropa de Mujer</a
-          >
-          <a
-            href="#"
-            class="filtro-btn btn btn-outline-primary"
-            data-filter=".electronics"
-            >Electrónica</a
-          >
-          <a
-            href="#"
-            class="filtro-btn btn btn-outline-primary"
-            data-filter=".jewelery"
-            >Joyería</a
-          >
+        <!-- Filtros a la izquierda -->
+        <div class="filtros d-flex align-items-center">
+          <!-- Botón toggle en móviles -->
+          <div class="dropdown d-md-none me-2">
+            <button
+              class="btn btn-primary dropdown-toggle"
+              type="button"
+              id="filtrosDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Filtrar
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="filtrosDropdown">
+              <li>
+                <a class="dropdown-item filtro-btn" href="#" data-filter="*"
+                  >Todos</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item filtro-btn"
+                  href="#"
+                  data-filter=".men-clothing"
+                  >Ropa de Hombre</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item filtro-btn"
+                  href="#"
+                  data-filter=".women-clothing"
+                  >Ropa de Mujer</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item filtro-btn"
+                  href="#"
+                  data-filter=".electronics"
+                  >Electrónica</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item filtro-btn"
+                  href="#"
+                  data-filter=".jewelery"
+                  >Joyería</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Botones visibles solo en pantallas medianas o grandes -->
+          <div class="d-none d-md-flex gap-2">
+            <a href="#" class="filtro-btn btn btn-primary" data-filter="*"
+              >Todos</a
+            >
+            <a
+              href="#"
+              class="filtro-btn btn btn-outline-primary"
+              data-filter=".men-clothing"
+              >Ropa de Hombre</a
+            >
+            <a
+              href="#"
+              class="filtro-btn btn btn-outline-primary"
+              data-filter=".women-clothing"
+              >Ropa de Mujer</a
+            >
+            <a
+              href="#"
+              class="filtro-btn btn btn-outline-primary"
+              data-filter=".electronics"
+              >Electrónica</a
+            >
+            <a
+              href="#"
+              class="filtro-btn btn btn-outline-primary"
+              data-filter=".jewelery"
+              >Joyería</a
+            >
+          </div>
         </div>
-        <a href="./cart.html">Carrito</a>
+
+        <!-- Título en el centro -->
+        <h2 class="titulo-navbar">Tienda</h2>
+
+        <!-- Carrito a la derecha -->
+        <a class="ms-auto" href="./cart.html">Carrito</a>
       </div>
+
       <div class="main">
         <div class="container py-4">
           <div id="contenedor-productos" class="row g-4 justify-content-center">
@@ -57,9 +115,12 @@
         </div>
       </div>
     </section>
+    <!-- Bootstrap 5 JS (con Popper incluido) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
-    <script type="module" src="../scripts/main.js" defer></script>
-    <!-- SweetAlert2 desde CDN -->
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="../scripts/main.js" defer></script>
   </body>
 </html>

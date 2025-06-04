@@ -11,28 +11,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.warn("No se encontraron productos");
     return;
   }
-  targetsProductos(productos);
-  const grid = document.querySelector("#contenedor-productos");
 
-  // Instanciamos Isotope
-  const iso = new Isotope(grid, {
-    itemSelector: ".producto",
-    layoutMode: "fitRows",
-  });
+  targetsProductos(productos); // Carga los productos en el DOM
 
-  // Agregar evento click a botones de filtro
-  const botones = document.querySelectorAll(".filtro-btn");
-  botones.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      // Cambiar estilos de botón activo
-      botones.forEach((b) => b.classList.remove("btn-primary"));
-      botones.forEach((b) => b.classList.add("btn-outline-primary"));
-      btn.classList.add("btn-primary");
-      btn.classList.remove("btn-outline-primary");
+  const contenedor = document.querySelector("#contenedor-productos");
 
-      // Filtrar Isotope con el filtro del botón
-      const filterValue = btn.getAttribute("data-filter");
-      iso.arrange({ filter: filterValue });
+  // Esperamos que las imágenes se carguen antes de inicializar Isotope
+  imagesLoaded(contenedor, function () {
+    const iso = new Isotope(contenedor, {
+      itemSelector: ".producto",
+      layoutMode: "fitRows", // o 'masonry'
+    });
+
+    // Escuchamos los botones de filtro una vez que Isotope está listo
+    const botones = document.querySelectorAll(".filtro-btn");
+    botones.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        // Cambiar estilos del botón activo
+        botones.forEach((b) => b.classList.remove("btn-primary"));
+        botones.forEach((b) => b.classList.add("btn-outline-primary"));
+        btn.classList.add("btn-primary");
+        btn.classList.remove("btn-outline-primary");
+
+        // Aplicar el filtro en Isotope
+        const filterValue = btn.getAttribute("data-filter");
+        iso.arrange({ filter: filterValue });
+      });
     });
   });
 });

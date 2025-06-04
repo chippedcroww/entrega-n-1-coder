@@ -15,7 +15,7 @@ function targetsProductos(productos) {
       .replace("mens", "men")
       .replace("womens", "women");
 
-    col.className = `col-12 col-md-6 col-lg-4 producto ${claseCategoria}`;
+    col.className = `col-12 col-md-6 col-lg-4 col-sm-6 producto ${claseCategoria}`;
 
     col.innerHTML = `
       <div class="card h-100 shadow-sm">
